@@ -17,6 +17,6 @@ maven {
 ```
 
 ```build.gradle
-implementation 'com.github.yunianshu:IndicatorSeekBarNew:1.0.1'
+implementation 'com.github.yunianshu:IndicatorSeekBarNew:1.0.3'
 ```
 
