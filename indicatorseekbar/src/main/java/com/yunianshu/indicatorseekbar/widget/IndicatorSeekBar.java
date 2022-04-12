@@ -1602,10 +1602,6 @@ public class IndicatorSeekBar extends View {
         return Math.round(mProgress);
     }
 
-    public float getmProgress() {
-        return mProgress;
-    }
-
     /**
      * @return the upper limit of this seek bar's range.
      */
