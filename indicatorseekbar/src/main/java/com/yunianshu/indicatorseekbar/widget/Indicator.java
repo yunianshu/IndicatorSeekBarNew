@@ -166,11 +166,11 @@ public class Indicator {
         }
         int indicatorScreenX = getIndicatorScreenX();
         if (indicatorScreenX + touchX < mIndicatorPopW.getContentView().getMeasuredWidth() / 2) {
-            setMargin(mArrowView, -(int) (mIndicatorPopW.getContentView().getMeasuredWidth() / 2 - indicatorScreenX - touchX), -1, -1, -1);
+            mArrowView.setTranslationX(-(int) (mIndicatorPopW.getContentView().getMeasuredWidth() / 2 - indicatorScreenX - touchX));
         } else if (mWindowWidth - indicatorScreenX - touchX < mIndicatorPopW.getContentView().getMeasuredWidth() / 2) {
-            setMargin(mArrowView, (int) (mIndicatorPopW.getContentView().getMeasuredWidth() / 2 - (mWindowWidth - indicatorScreenX - touchX)), -1, -1, -1);
+            mArrowView.setTranslationX((int) (mIndicatorPopW.getContentView().getMeasuredWidth() / 2 - (mWindowWidth - indicatorScreenX - touchX)));
         } else {
-            setMargin(mArrowView, 0, 0, 0, 0);
+            mArrowView.setTranslationX(0);
         }
     }
 
@@ -208,11 +208,16 @@ public class Indicator {
     }
 
     void updateIndicatorLocation(int offset) {
-        setMargin(mIndicatorView, offset, -1, -1, -1);
+        if (mIndicatorView != null) {
+            // 使用绝对 X 定位，避免 RTL 下 margin 方向解析导致指示器贴在右侧
+            mIndicatorView.setX(offset);
+        }
     }
 
     void updateArrowViewLocation(int offset) {
-        setMargin(mArrowView, offset, -1, -1, -1);
+        if (mArrowView != null) {
+            mArrowView.setTranslationX(offset);
+        }
     }
 
 
