@@ -1,7 +1,10 @@
 package com.yunianshu.indicatorseekbarnew;
 
-import android.widget.TextView;
+import android.view.Menu;
+import android.view.MenuItem;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -25,7 +28,7 @@ import java.util.List;
 
 public class MainActivity extends BaseActivity {
 
-    private static String[] sType = new String[]{"continuous", "discrete", "custom", "java", "indicator", "donation"};
+    private String[] mTypeTabs = new String[0];
     private List<Fragment> mFragmentList = new ArrayList<>();
 
     @Override
@@ -50,19 +53,69 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initViews() {
+        Toolbar toolbar = findViewById(R.id.toolbar);
         ViewPager viewPager = findViewById(R.id.viewPager);
         TabLayout tabLayout = findViewById(R.id.tabLayout);
+
+        setSupportActionBar(toolbar);
+        mTypeTabs = getResources().getStringArray(R.array.tab_types);
 
         viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
 
         tabLayout.setupWithViewPager(viewPager);
+    }
 
-        for (String s : sType) {
-            TextView textView = new TextView(this);
-            textView.setText(s);
-            tabLayout.newTab().setCustomView(textView);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_language) {
+            showLanguageSwitchDialog();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
+    }
 
+    private void showLanguageSwitchDialog() {
+        final String[] languageNames = getResources().getStringArray(R.array.language_names);
+        final String[] languageValues = getResources().getStringArray(R.array.language_values);
+        int checkedIndex = getCheckedLanguageIndex(languageValues);
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.language_switch_title)
+                .setSingleChoiceItems(languageNames, checkedIndex, (dialog, which) -> {
+                    switchLanguage(languageValues[which]);
+                    dialog.dismiss();
+                })
+                .show();
+    }
+
+    private int getCheckedLanguageIndex(String[] languageValues) {
+        String selectedLanguageTag = LocaleHelper.getSavedLanguageTag(this);
+        if (selectedLanguageTag.isEmpty()) {
+            selectedLanguageTag = LocaleHelper.getCurrentLanguageTag(this);
+        }
+        for (int i = 0; i < languageValues.length; i++) {
+            if (LocaleHelper.isSameLanguage(selectedLanguageTag, languageValues[i])) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
+    private void switchLanguage(String languageTag) {
+        String selectedLanguageTag = LocaleHelper.getSavedLanguageTag(this);
+        if (selectedLanguageTag.isEmpty()) {
+            selectedLanguageTag = LocaleHelper.getCurrentLanguageTag(this);
+        }
+        if (LocaleHelper.isSameLanguage(selectedLanguageTag, languageTag)) {
+            return;
+        }
+        LocaleHelper.setSavedLanguageTag(this, languageTag);
+        recreate();
     }
 
     private class PagerAdapter extends FragmentPagerAdapter {
@@ -78,12 +131,12 @@ public class MainActivity extends BaseActivity {
 
         @Override
         public int getCount() {
-            return sType.length;
+            return mTypeTabs.length;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return sType[position];
+            return mTypeTabs[position];
         }
     }
 

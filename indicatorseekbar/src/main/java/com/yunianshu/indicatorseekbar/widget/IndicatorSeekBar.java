@@ -595,10 +595,7 @@ public class IndicatorSeekBar extends View {
             } else {
                 mTextPaint.setColor(getRightSideTickTextsColor());
             }
-            int index = i;
-            if (mR2L) {
-                index = mTickTextsArr.length - i - 1;
-            }
+            int index = getTickTextIndexByPosition(i);
             if (i == 0) {
                 canvas.drawText(mTickTextsArr[index], mTextCenterX[i] + mTickTextsWidth[index] / 2.0f, mTickTextY, mTextPaint);
             } else if (i == mTickTextsArr.length - 1) {
@@ -714,6 +711,17 @@ public class IndicatorSeekBar extends View {
             return (getThumbCenterX() - mPaddingLeft) / mSeekBlockLength;
         }
         return 0;
+    }
+
+    private int getTickTextIndexByPosition(int position) {
+        if (mTickTextsArr == null || mTickTextsArr.length == 0) {
+            return 0;
+        }
+        int safePosition = Math.max(0, Math.min(position, mTickTextsArr.length - 1));
+        if (mR2L) {
+            return mTickTextsArr.length - safePosition - 1;
+        }
+        return safePosition;
     }
 
     private int getHeightByRatio(Drawable drawable, int width) {
@@ -1457,7 +1465,8 @@ public class IndicatorSeekBar extends View {
         if (mTicksCount > 2) {
             int rawThumbPos = getThumbPosOnTick();
             if (mShowTickText && mTickTextsArr != null) {
-                mSeekParams.tickText = mTickTextsArr[rawThumbPos];
+                int index = getTickTextIndexByPosition(rawThumbPos);
+                mSeekParams.tickText = mTickTextsArr[index];
             }
             if (mR2L) {
                 mSeekParams.thumbPosition = mTicksCount - rawThumbPos - 1;
@@ -1545,7 +1554,8 @@ public class IndicatorSeekBar extends View {
     String getIndicatorTextString() {
         if (mIndicatorTextFormat != null && mIndicatorTextFormat.contains(FORMAT_TICK_TEXT)) {
             if (mTicksCount > 2 && mTickTextsArr != null) {
-                return mIndicatorTextFormat.replace(FORMAT_TICK_TEXT, mTickTextsArr[getThumbPosOnTick()]);
+                int index = getTickTextIndexByPosition(getThumbPosOnTick());
+                return mIndicatorTextFormat.replace(FORMAT_TICK_TEXT, mTickTextsArr[index]);
             }
         } else if (mIndicatorTextFormat != null && mIndicatorTextFormat.contains(FORMAT_PROGRESS)) {
             return mIndicatorTextFormat.replace(FORMAT_PROGRESS, getProgressString(mProgress));
