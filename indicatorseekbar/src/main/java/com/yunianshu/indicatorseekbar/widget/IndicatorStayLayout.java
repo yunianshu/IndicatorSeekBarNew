@@ -2,6 +2,7 @@ package com.yunianshu.indicatorseekbar.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -91,12 +92,12 @@ public class IndicatorStayLayout extends LinearLayout {
             if (contentView instanceof IndicatorSeekBar) {
                 throw new IllegalStateException("IndicatorSeekBar can not be a contentView for Indicator in case this inflating loop.");
             }
-            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT);
-            MarginLayoutParams layoutParams = new MarginLayoutParams(params);
-            layoutParams.setMargins(layoutParams.leftMargin, layoutParams.topMargin,
-                    layoutParams.rightMargin, SizeUtils.dp2px(seekBar.getContext(), 2) - seekBar.getPaddingTop());
+            // 固定物理左侧锚点，避免 RTL 下 START 对齐导致 stay 指示器整体贴右
+            layoutParams.gravity = Gravity.LEFT;
+            layoutParams.bottomMargin = SizeUtils.dp2px(seekBar.getContext(), 2) - seekBar.getPaddingTop();
             addView(contentView, index, layoutParams);
             seekBar.showStayIndicator();
         }

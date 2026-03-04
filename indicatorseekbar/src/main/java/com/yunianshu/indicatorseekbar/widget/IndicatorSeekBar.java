@@ -1694,10 +1694,24 @@ public class IndicatorSeekBar extends View {
      * @param isR2L True if see form right to left on the screen.
      */
     public void setR2L(boolean isR2L) {
+        if (this.mR2L == isR2L) {
+            return;
+        }
         this.mR2L = isR2L;
+        if (mProgressTrack != null && mBackgroundTrack != null) {
+            refreshThumbCenterXByProgress(mProgress);
+        }
         requestLayout();
         invalidate();
-        updateStayIndicator();
+        post(new Runnable() {
+            @Override
+            public void run() {
+                if (mProgressTrack != null && mBackgroundTrack != null) {
+                    refreshThumbCenterXByProgress(mProgress);
+                }
+                updateStayIndicator();
+            }
+        });
     }
 
     /**

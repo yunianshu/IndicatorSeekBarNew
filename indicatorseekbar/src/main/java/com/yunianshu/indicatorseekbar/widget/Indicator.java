@@ -208,10 +208,7 @@ public class Indicator {
     }
 
     void updateIndicatorLocation(int offset) {
-        if (mIndicatorView != null) {
-            // 使用绝对 X 定位，避免 RTL 下 margin 方向解析导致指示器贴在右侧
-            mIndicatorView.setX(offset);
-        }
+        setMargin(mIndicatorView, offset, -1, -1, -1);
     }
 
     void updateArrowViewLocation(int offset) {
