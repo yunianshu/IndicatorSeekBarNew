@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">IndicatorSeekBar</string>
+    <string name="alipay">علي باي</string>
+    <string name="wechatpay">ويتشات باي</string>
+    <string name="paypal">Paypal</string>
+    <string name="buy_me_a_coffee">ادعمني بفنجان قهوة، شكرا</string>
+    <string name="language_switch_short">اللغة</string>
+    <string name="language_switch_title">تبديل اللغة</string>
+    <string name="layout_direction_status">الاتجاه: %1$s</string>
+    <string name="layout_direction_rtl">RTL</string>
+    <string name="layout_direction_ltr">LTR</string>
+
+    <string-array name="tab_types">
+        <item>مستمر</item>
+        <item>متقطع</item>
+        <item>مخصص</item>
+        <item>جافا</item>
+        <item>المؤشر</item>
+        <item>الدعم</item>
+    </string-array>
+
+    <string-array name="language_names">
+        <item>English</item>
+        <item>简体中文</item>
+        <item>العربية</item>
+    </string-array>
+
+    <string-array name="language_values">
+        <item>en</item>
+        <item>zh</item>
+        <item>ar</item>
+    </string-array>
+</resources>

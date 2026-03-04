@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">IndicatorSeekBar</string>
+    <string name="alipay">支付宝</string>
+    <string name="wechatpay">微信支付</string>
+    <string name="paypal">Paypal</string>
+    <string name="buy_me_a_coffee">打赏一下，谢谢!</string>
+    <string name="language_switch_short">语言</string>
+    <string name="language_switch_title">切换语言</string>
+    <string name="layout_direction_status">方向：%1$s</string>
+    <string name="layout_direction_rtl">RTL</string>
+    <string name="layout_direction_ltr">LTR</string>
+
+    <string-array name="tab_types">
+        <item>连续</item>
+        <item>离散</item>
+        <item>自定义</item>
+        <item>Java</item>
+        <item>指示器</item>
+        <item>赞助</item>
+    </string-array>
+
+    <string-array name="language_names">
+        <item>English</item>
+        <item>简体中文</item>
+        <item>العربية</item>
+    </string-array>
+
+    <string-array name="language_values">
+        <item>en</item>
+        <item>zh</item>
+        <item>ar</item>
+    </string-array>
+</resources>
