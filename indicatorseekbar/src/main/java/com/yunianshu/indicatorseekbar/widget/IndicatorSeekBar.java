@@ -1367,19 +1367,20 @@ public class IndicatorSeekBar extends View {
                 mScreenWidth = metric.widthPixels;
             }
         }
-        int indicatorOffset;
+        int localIndicatorOffset;
         int arrowOffset;
         if (measuredWidth / 2 + thumbCenterX > mMeasuredWidth) {
-            indicatorOffset = mMeasuredWidth - measuredWidth;
-            arrowOffset = (int) (thumbCenterX - indicatorOffset - measuredWidth / 2);
+            localIndicatorOffset = mMeasuredWidth - measuredWidth;
+            arrowOffset = (int) (thumbCenterX - localIndicatorOffset - measuredWidth / 2);
         } else if (thumbCenterX - measuredWidth / 2 < 0) {
-            indicatorOffset = 0;
+            localIndicatorOffset = 0;
             arrowOffset = -(int) (measuredWidth / 2 - thumbCenterX);
         } else {
-            indicatorOffset = (int) (getThumbCenterX() - measuredWidth / 2);
+            localIndicatorOffset = (int) (getThumbCenterX() - measuredWidth / 2);
             arrowOffset = 0;
         }
 
+        int indicatorOffset = getLeft() + localIndicatorOffset;
         mIndicator.updateIndicatorLocation(indicatorOffset);
         mIndicator.updateArrowViewLocation(arrowOffset);
     }

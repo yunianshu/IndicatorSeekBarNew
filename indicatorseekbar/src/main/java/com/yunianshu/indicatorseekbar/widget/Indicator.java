@@ -3,6 +3,7 @@ package com.yunianshu.indicatorseekbar.widget;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -160,6 +161,11 @@ public class Indicator {
         return mLocation[0];
     }
 
+    private int getIndicatorScreenY() {
+        mSeekBar.getLocationOnScreen(mLocation);
+        return mLocation[1];
+    }
+
     private void adjustArrow(float touchX) {
         if (mIndicatorType == IndicatorType.CUSTOM || mIndicatorType == IndicatorType.CIRCULAR_BUBBLE) {
             return;
@@ -230,8 +236,11 @@ public class Indicator {
         refreshProgressText();
         if (mIndicatorPopW != null) {
             mIndicatorPopW.getContentView().measure(0, 0);
-            mIndicatorPopW.update(mSeekBar, (int) (touchX - mIndicatorPopW.getContentView().getMeasuredWidth() / 2),
-                    -(mSeekBar.getMeasuredHeight() + mIndicatorPopW.getContentView().getMeasuredHeight() - mSeekBar.getPaddingTop() /*- mSeekBar.getTextHeight() */ + mGap), -1, -1);
+            int popupWidth = mIndicatorPopW.getContentView().getMeasuredWidth();
+            int popupHeight = mIndicatorPopW.getContentView().getMeasuredHeight();
+            int popupX = getIndicatorScreenX() + (int) (touchX - popupWidth / 2f);
+            int popupY = getIndicatorScreenY() - popupHeight + mSeekBar.getPaddingTop() - mGap;
+            mIndicatorPopW.update(popupX, popupY, -1, -1);
             adjustArrow(touchX);
         }
     }
@@ -248,8 +257,11 @@ public class Indicator {
         refreshProgressText();
         if (mIndicatorPopW != null) {
             mIndicatorPopW.getContentView().measure(0, 0);
-            mIndicatorPopW.showAsDropDown(mSeekBar, (int) (touchX - mIndicatorPopW.getContentView().getMeasuredWidth() / 2f),
-                    -(mSeekBar.getMeasuredHeight() + mIndicatorPopW.getContentView().getMeasuredHeight() - mSeekBar.getPaddingTop() /*- mSeekBar.getTextHeight()*/ + mGap));
+            int popupWidth = mIndicatorPopW.getContentView().getMeasuredWidth();
+            int popupHeight = mIndicatorPopW.getContentView().getMeasuredHeight();
+            int popupX = getIndicatorScreenX() + (int) (touchX - popupWidth / 2f);
+            int popupY = getIndicatorScreenY() - popupHeight + mSeekBar.getPaddingTop() - mGap;
+            mIndicatorPopW.showAtLocation(mSeekBar, Gravity.NO_GRAVITY, popupX, popupY);
             adjustArrow(touchX);
         }
     }
