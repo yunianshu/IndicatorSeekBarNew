@@ -6,6 +6,9 @@
     <string name="buy_me_a_coffee">打赏一下，谢谢!</string>
     <string name="language_switch_short">语言</string>
     <string name="language_switch_title">切换语言</string>
+    <string name="layout_direction_status">方向：%1$s</string>
+    <string name="layout_direction_rtl">RTL</string>
+    <string name="layout_direction_ltr">LTR</string>
 
     <string-array name="tab_types">
         <item>连续</item>

@@ -2,6 +2,7 @@ package com.yunianshu.indicatorseekbarnew;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
@@ -58,11 +59,18 @@ public class MainActivity extends BaseActivity {
         TabLayout tabLayout = findViewById(R.id.tabLayout);
 
         setSupportActionBar(toolbar);
+        updateLayoutDirectionStatus(toolbar);
         mTypeTabs = getResources().getStringArray(R.array.tab_types);
 
         viewPager.setAdapter(new PagerAdapter(getSupportFragmentManager()));
 
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    private void updateLayoutDirectionStatus(Toolbar toolbar) {
+        boolean isRtl = getResources().getConfiguration().getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;
+        int directionResId = isRtl ? R.string.layout_direction_rtl : R.string.layout_direction_ltr;
+        toolbar.setSubtitle(getString(R.string.layout_direction_status, getString(directionResId)));
     }
 
     @Override

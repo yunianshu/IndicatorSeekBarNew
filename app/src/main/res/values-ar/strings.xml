@@ -6,6 +6,9 @@
     <string name="buy_me_a_coffee">ادعمني بفنجان قهوة، شكرا</string>
     <string name="language_switch_short">اللغة</string>
     <string name="language_switch_title">تبديل اللغة</string>
+    <string name="layout_direction_status">الاتجاه: %1$s</string>
+    <string name="layout_direction_rtl">RTL</string>
+    <string name="layout_direction_ltr">LTR</string>
 
     <string-array name="tab_types">
         <item>مستمر</item>
